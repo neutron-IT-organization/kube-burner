@@ -21,7 +21,7 @@ jobs:
         replicas: 1
 
   - name: kubelet-density-cni-networkpolicy
-    jobIterations: 2
+    jobIterations: 100
     qps: 25
     burst: 25
     namespacedIterations: false
