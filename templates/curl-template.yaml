@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: curl-{{.Replica}}-{{.Iteration}}
+  labels:
+    app: curl
+    replica: {{.Replica}}
+    iteration: {{.Iteration}}
+spec:
+  template:
+    path: templates/curl
+    values:
+      replica: {{.Replica}}
+      iteration: {{.Iteration}}
+  restartPolicy: Always

@@ -1,0 +1,23 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDataSource
+metadata:
+  name: elastic-kube-burner
+spec:
+  datasources:
+  - access: proxy
+    basicAuth: true
+    basicAuthPassword: YOUR_PASSWORD
+    basicAuthUser: elastic
+    database: kube-burner
+    editable: true
+    isDefault: false
+    jsonData:
+      tlsSkipVerify: true
+      esVersion: 70
+      timeField: timestamp
+      timeInterval: 5s
+    name: Elastic-kube-burner
+    type: elasticsearch
+    url: https://YOUR_ROUTE
+    version: 1
+  name: elastic-kube-burner.yaml

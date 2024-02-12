@@ -1,0 +1,45 @@
+---
+global:
+  indexerConfig:
+    esServers: [https://elastic:YOURPASSWORD@YOUR_ES_ROUTE]
+    insecureSkipVerify: true
+    defaultIndex: kube-burner
+    type: elastic
+  measurements:
+    - name: podLatency
+jobs:
+  - name: deny-all-policy
+    jobIterations: 1
+    qps: 1
+    burst: 1
+    namespacedIterations: false
+    namespace: kubelet-density-cni-networkpolicy
+    jobPause: 1m
+    objects:
+
+      - objectTemplate: templates/deny-all.yaml
+        replicas: 1
+
+  - name: kubelet-density-cni-networkpolicy
+    jobIterations: 2
+    qps: 25
+    burst: 25
+    namespacedIterations: false
+    namespace: kubelet-density-cni-networkpolicy
+    waitWhenFinished: true
+    podWait: false
+    preLoadImages: true
+    preLoadPeriod: 2m
+    objects:
+
+      - objectTemplate: templates/ubi9-deployment.yaml
+        replicas: 1
+
+      - objectTemplate: templates/ubi9-service.yaml
+        replicas: 1
+
+      - objectTemplate: templates/allow-http.yaml
+        replicas: 1
+
+      - objectTemplate: templates/curl-deployment.yaml
+        replicas: 1

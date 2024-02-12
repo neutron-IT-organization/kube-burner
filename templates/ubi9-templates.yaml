@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubi9-{{.Replica}}-{{.Iteration}}
+  labels:
+    app: ubi9
+    replica: {{.Replica}}
+    iteration: {{.Iteration}}
+spec:
+  template:
+    path: templates/ubi9
+    values:
+      replica: {{.Replica}}
+      iteration: {{.Iteration}}
+  restartPolicy: Always
